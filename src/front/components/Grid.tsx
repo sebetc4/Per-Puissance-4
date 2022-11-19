@@ -1,17 +1,20 @@
 import { CSSProperties } from 'react';
-import { CellState, GridState, PlayerColor } from '../../types';
+import { CellState, GridState, PlayerColor, Position } from '../../types';
 import { discColor } from '../../utils/color';
 import { prevent } from '../../utils/dom';
 
 type GridProps = {
     color?: PlayerColor;
     grid: GridState;
-    onDrop?: (x: number) => void;
+    onDrop: (x: number) => void;
+    winingPosition: Position[];
+    canDrop: (x: number) => boolean;
 };
 
-export default function Grid({ color, grid, onDrop }: GridProps) {
+export default function Grid({ color, grid, onDrop, winingPosition, canDrop }: GridProps) {
     const cols = grid[0].length;
     const showColumns = color && onDrop;
+    const isWining = (x: number, y: number) => !!winingPosition.find((p) => p.x === x && p.y === y);
     return (
         <div
             className='grid'
@@ -24,6 +27,7 @@ export default function Grid({ color, grid, onDrop }: GridProps) {
                         y={y}
                         color={color}
                         key={`${x}-${y}`}
+                        isWining={isWining(x, y)}
                     />
                 ))
             )}
@@ -31,9 +35,11 @@ export default function Grid({ color, grid, onDrop }: GridProps) {
                 <div className='columns'>
                     {new Array(cols).fill(1).map((_, i) => (
                         <Column
+                            x={i}
                             key={i}
                             color={color}
-                            onDrop={() => onDrop(i)}
+                            onDrop={onDrop}
+                            disabled={!canDrop(i)}
                         />
                     ))}
                 </div>
@@ -43,20 +49,20 @@ export default function Grid({ color, grid, onDrop }: GridProps) {
 }
 
 type ColumnProps = {
+    x: number;
     color: PlayerColor;
-    onDrop: () => void;
+    disabled?: boolean;
+    onDrop: (x: number) => void;
 };
 
-function Column({ color, onDrop }: ColumnProps) {
+function Column({ x, color, disabled, onDrop }: ColumnProps) {
     return (
         <button
             className='column'
-            onClick={prevent(onDrop)}
+            onClick={prevent(() => onDrop(x))}
+            disabled={disabled}
         >
-            <div
-                className={discColor(color)}
-                onDrop={onDrop}
-            ></div>
+            <div className={discColor(color)}/>
         </button>
     );
 }
@@ -65,12 +71,13 @@ type CellProps = {
     x: number;
     y: number;
     color: CellState;
+    isWining: boolean;
 };
 
-function Cell({ x, y, color }: CellProps) {
+function Cell({ x, y, color, isWining }: CellProps) {
     return (
         <div
-            className={discColor(color)}
+            className={`${discColor(color)} ${isWining ? 'wining' : ''}`}
             style={{ '--row': y } as CSSProperties}
         />
     );

@@ -34,7 +34,6 @@ export const winingPos = (grid: GridState, color: PlayerColor, x: number, size: 
                     break;
                 }
                 items.push({ x, y });
-                console.log(x, y);
             }
             if (items.length >= size) {
                 return items;

@@ -1,6 +1,10 @@
 import { ContextFrom, EventFrom } from 'xstate';
 import { GameModel } from './machine/GameMachine';
 
+export enum ServerErrors {
+    AuthError
+}
+
 export enum PlayerColor {
     RED = 'R',
     YELLOW = 'Y',
@@ -10,6 +14,16 @@ export type Player = {
     id: string;
     name: string;
     color?: PlayerColor; //Par défaut les joueur n'ont pas forcement de couleur
+}
+
+export type PlayerSession = {
+    playerId: string;
+    name: string;
+    signature: string;
+}
+
+export enum QueryParams {
+    GAMEID = 'gameId'
 }
 
 export type CellEmpty = 'E'; //Cellule vide

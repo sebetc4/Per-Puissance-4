@@ -34,6 +34,18 @@ input:disabled {
     opacity: .4;
 }
 
+button {
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: .5;
+}
+
 .button {
     background-color: #5e80e7;
     font: inherit;
@@ -129,7 +141,15 @@ input:disabled {
     width: 80%;
     height: auto;
     aspect-ratio: 1 / 1;
+}
+
+.grid .disc--red,
+.grid .disc--yellow {
     animation: Drop calc(0.2s * var(--row)) both;
+}
+
+.grid .disc.wining {
+    border: 10px solid rgb(255, 235, 198)
 }
 
 @keyframes Drop {
@@ -151,10 +171,11 @@ input:disabled {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    border: none;
-    background: none;
-    padding: 0;
-    margin: 0;
+}
+
+.column:disabled {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .column .disc {

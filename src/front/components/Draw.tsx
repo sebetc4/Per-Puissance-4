@@ -1,15 +1,12 @@
-import React from 'react';
 import { PlayerColor } from '../../types';
 import { discColor } from '../../utils/color';
 import { prevent } from '../../utils/dom';
 
-interface VictoryProps {
-    color: PlayerColor;
-    name: string;
+interface DrawProps {
     onRestart?: () => void;
 }
 
-export default function Victory({ color, name, onRestart }: VictoryProps) {
+export default function Victory({onRestart }: DrawProps) {
     return (
         <div
             className='flex'
@@ -21,8 +18,7 @@ export default function Victory({ color, name, onRestart }: VictoryProps) {
                 className='flex'
                 style={{ gap: '.5rem' }}
             >
-                Bravo, {name}
-                <div className={discColor(color)} />à gagné!!
+                Egalité!!
             </h2>
             <button
                 className='button'

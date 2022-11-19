@@ -1,4 +1,5 @@
 import { FormEvent, useState } from 'react';
+import { prevent } from '../../utils/dom';
 
 type NameSelectorProps = {
     onSelect: (username: string) => void;
@@ -11,12 +12,12 @@ export default function NameSelector({ onSelect, disabled }: NameSelectorProps) 
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        const name = new FormData(e.currentTarget as HTMLFormElement).get('name');
-        if (!name || name.toString().trim() === '') {
+        const username = new FormData(e.currentTarget as HTMLFormElement).get('username');
+        if (!username || username.toString().trim() === '') {
             setError('Vous devez choisir un pseudo');
             return;
         }
-        onSelect(name.toString());
+        onSelect(username.toString());
     };
 
     return (

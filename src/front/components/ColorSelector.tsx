@@ -26,10 +26,11 @@ export default function ColorSelector({ onSelect, players, colors }: ColorSelect
             <div className='selector'>
                 {colors.map((color) => (
                     <button
-                    onClick={() => onSelect(color)}
-                        className={discColor(color)}
+                        onClick={() => onSelect(color)}
                         key={color}
-                    ></button>
+                    >
+                        <div className={discColor(color)} />
+                    </button>
                 ))}
             </div>
         </>

@@ -1,6 +1,7 @@
 import { interpret, InterpreterFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { PlayerColor, Player, GridState, GameContext, GameStates, Position } from '../types';
+import { currentPlayer } from '../utils/game';
 import {
     chooseColorAction,
     dropTokenAction,
@@ -89,7 +90,7 @@ export const GameMachine = GameModel.createMachine({
                 20000: {
                     actions: [GameModel.assign(switchPlayerAction)],
                     target: GameStates.PLAY,
-                }
+                },
             },
             on: {
                 dropToken: [
